@@ -22,6 +22,6 @@
     "build": "webpack --config webpack.prod.js",
     "style": "eslint . && prettier . --write",
     "test": "jest",
-    "watch": "jest --watch *.js"
+    "watch": "jest --watchAll"
   }
 }
