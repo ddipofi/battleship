@@ -56,10 +56,7 @@ describe("Gameboard", () => {
       [8, 4],
     ];
     const ship = new Ship(3);
-    board.placeShip(ship, coords);
-    expect(board.getBoardCoord(coords[0])).toBe(undefined);
-    expect(board.getBoardCoord(coords[1])).toBe(undefined);
-    expect(board.getBoardCoord(coords[2])).toBe(undefined);
+    expect(() => board.placeShip(ship, coords)).toThrow();
   });
 
   test("2 hit ship should not have more than 2 coordinates", () => {
@@ -69,10 +66,7 @@ describe("Gameboard", () => {
       [1, 4],
     ];
     const ship = new Ship(2);
-    board.placeShip(ship, coords);
-    expect(board.getBoardCoord(coords[0])).toBe(undefined);
-    expect(board.getBoardCoord(coords[1])).toBe(undefined);
-    expect(board.getBoardCoord(coords[2])).toBe(undefined);
+    expect(() => board.placeShip(ship, coords)).toThrow();
   });
 
   test("3 hit ship should not have less than 3 coordinates", () => {
@@ -81,9 +75,7 @@ describe("Gameboard", () => {
       [1, 3],
     ];
     const ship = new Ship(3);
-    board.placeShip(ship, coords);
-    expect(board.getBoardCoord(coords[0])).toBe(undefined);
-    expect(board.getBoardCoord(coords[1])).toBe(undefined);
+    expect(() => board.placeShip(ship, coords)).toThrow();
   });
 
   test("Ship cannot be placed outside of board", () => {
@@ -92,9 +84,18 @@ describe("Gameboard", () => {
       [3, 10],
     ];
     const ship = new Ship(2);
+    expect(() => board.placeShip(ship, coords)).toThrow();
+  });
+
+  test("Ship cannot be placed on occupied coordinates", () => {
+    const coords = [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+    ];
+    const ship = new Ship(3);
     board.placeShip(ship, coords);
-    expect(() => board.getBoardCoord(coords[0])).toThrow();
-    expect(() => board.getBoardCoord(coords[1])).toThrow();
+    expect(() => board.placeShip(new Ship(3), coords)).toThrow();
   });
 
   test("Board was updated with miss", () => {
@@ -128,5 +129,36 @@ describe("Gameboard", () => {
     board.placeShip(ship, coords);
     board.receiveAttack([2, 3]);
     expect(() => board.receiveAttack([2, 3])).toThrow();
+  });
+
+  test("All ships are sunk", () => {
+    const coords1 = [
+      [2, 3],
+      [3, 3],
+    ];
+    const coords2 = [
+      [6, 3],
+      [7, 3],
+    ];
+    const ship1 = new Ship(2);
+    const ship2 = new Ship(2);
+    board.placeShip(ship1, coords1);
+    board.placeShip(ship2, coords2);
+    board.receiveAttack([2, 3]);
+    board.receiveAttack([3, 3]);
+    board.receiveAttack([6, 3]);
+    board.receiveAttack([7, 3]);
+    expect(board.allShipsSunk()).toBe(true);
+  });
+
+  test("Not all ships are sunk", () => {
+    const coords = [
+      [2, 3],
+      [3, 3],
+    ];
+    const ship = new Ship(2);
+    board.placeShip(ship, coords);
+    board.receiveAttack([2, 3]);
+    expect(board.allShipsSunk()).toBe(false);
   });
 });

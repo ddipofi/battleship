@@ -27,9 +27,11 @@ class Ship {
 
 class Gameboard {
   #board;
+  #ships;
 
   constructor() {
     this.#constructBoard();
+    this.#ships = [];
   }
 
   #constructBoard() {
@@ -73,8 +75,17 @@ class Gameboard {
   placeShip(ship, coords) {
     if (this.#validateCoords(coords) && ship.length === coords.length) {
       for (const coord of coords) {
+        if (this.#board[coord[0]][coord[1]] !== undefined)
+          throw new Error("Coordinates are invalid!");
+      }
+
+      for (const coord of coords) {
         this.#board[coord[0]][coord[1]] = ship;
       }
+
+      this.#ships.push(ship);
+    } else {
+      throw new Error("Coordinates are invalid!");
     }
   }
 
@@ -92,6 +103,22 @@ class Gameboard {
       throw Error("Already attacked this coordinate!");
     boardCoord.hit(coord);
   }
+
+  allShipsSunk() {
+    for (const ship of this.#ships) {
+      if (!ship.isSunk()) return false;
+    }
+
+    return true;
+  }
 }
 
 export { Ship, Gameboard };
+
+// const board = new Gameboard();
+// const coords = [
+//   [2, 10],
+//   [3, 10],
+// ];
+// const ship = new Ship(2);
+// board.placeShip(ship, coords);
