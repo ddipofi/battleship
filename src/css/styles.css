@@ -1,0 +1,114 @@
+*:not(dialog) {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+h1 {
+  padding-top: 20px;
+  font-size: 3rem;
+}
+
+.game {
+  display: flex;
+  flex: 1;
+  gap: 100px;
+}
+
+.separator {
+  width: 50px;
+  background-image: url("https://media.gettyimages.com/id/154416206/photo/stone-wall-texture.jpg?s=612x612&w=gi&k=20&c=pGCjWNdfo3_AKrALhFR_ulCJoSq857YDbKFYSTadYB8=");
+  background-size: 130%;
+  filter: brightness(0.4) hue-rotate(-0deg) saturate(1);
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  gap: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.board {
+  display: grid;
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+  width: 500px;
+  height: 500px;
+  border: 6px solid black;
+}
+
+.coord {
+  border: 2px solid black;
+}
+
+.empty {
+  background-image: url("https://img.freepik.com/premium-photo/hard-light-mineral-blue-shiny-glowing-effects-abstract-background-design_851755-190023.jpg?semt=ais_hybrid&w=740");
+  filter: brightness(2) hue-rotate(-30deg) saturate(2);
+}
+
+.miss {
+  background-image: url("https://img.freepik.com/premium-photo/hard-light-mineral-blue-shiny-glowing-effects-abstract-background-design_851755-190023.jpg?semt=ais_hybrid&w=740");
+  filter: brightness(1.2) hue-rotate(0deg) saturate(1);
+}
+
+.ship {
+  background-image: url("https://as2.ftcdn.net/jpg/02/54/58/85/1000_F_254588592_quSoNwUKEIeVbEejona5Nhv4aZydnp1T.jpg");
+  background-size: cover;
+}
+
+.hit {
+  background-image: url("https://www.tutorialchip.com/wp-content/uploads/2011/12/Flaming-Gold.jpg");
+  background-size: 200%;
+}
+
+.sunk {
+  background-image: url("https://as2.ftcdn.net/v2/jpg/09/62/78/95/1000_F_962789567_aTSmB4zSipxakMbSSSJiQFD7DUjvHaB6.jpg");
+  background-size: 100%;
+  background-position: center -20px;
+}
+
+::backdrop {
+  background-image: linear-gradient(
+    45deg,
+    magenta,
+    rebeccapurple,
+    dodgerblue,
+    green
+  );
+  opacity: 0.75;
+}
+
+dialog {
+  font-size: 12rem;
+  background: none;
+  border: none;
+  font-family: Arial;
+  font-weight: bold;
+  padding: 0;
+  text-align: center;
+  outline: none;
+}
+
+button {
+  border: 3px solid black;
+  padding: 10px 40px;
+  font-size: 1.5rem;
+  background-color: rgb(216, 216, 216);
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: rgb(179, 179, 179);
+}

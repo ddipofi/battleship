@@ -1,10 +1,9 @@
 class Ship {
-  #hits;
+  #hits = new Set();
   #length;
 
   constructor(length) {
     this.#length = length;
-    this.#hits = new Set();
   }
 
   get length() {
@@ -27,11 +26,14 @@ class Ship {
 
 class Gameboard {
   #board;
-  #ships;
+  #ships = [];
 
   constructor() {
     this.#constructBoard();
-    this.#ships = [];
+  }
+
+  get board() {
+    return this.#board;
   }
 
   #constructBoard() {
@@ -89,6 +91,15 @@ class Gameboard {
     }
   }
 
+  getCoordStatus(coord) {
+    const item = this.#board[coord[0]][coord[1]];
+    if (item === undefined) return "empty";
+    if (item === "miss") return item;
+    if (item.isSunk()) return "sunk";
+    if (item.containsHit(coord)) return "hit";
+    return "ship";
+  }
+
   getBoardCoord(coord) {
     if (this.#inRange(coord)) return this.#board[coord[0]][coord[1]];
 
@@ -113,12 +124,22 @@ class Gameboard {
   }
 }
 
-export { Ship, Gameboard };
+class Player {
+  #role;
+  #gameboard;
 
-// const board = new Gameboard();
-// const coords = [
-//   [2, 10],
-//   [3, 10],
-// ];
-// const ship = new Ship(2);
-// board.placeShip(ship, coords);
+  constructor(role, gameboard) {
+    this.#role = role;
+    this.#gameboard = gameboard;
+  }
+
+  get gameboard() {
+    return this.#gameboard;
+  }
+
+  get role() {
+    return this.#role;
+  }
+}
+
+export { Ship, Gameboard, Player };
